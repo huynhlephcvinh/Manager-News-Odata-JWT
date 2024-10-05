@@ -1,0 +1,134 @@
+﻿@model IEnumerable<BusinessObject.NewsArticle>
+
+@{
+    ViewBag.Title = "News Articles Report";
+    // Retrieve current start and end dates to re-populate input fields
+    var startDate = ViewBag.StartDate ?? "";
+    var endDate = ViewBag.EndDate ?? "";
+}
+
+<h2>News Articles Report</h2>
+
+<!-- Date Filters Form -->
+<form asp-action="ReportStatistic" method="get" class="form-inline">
+    <div class="form-group">
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" value="@startDate" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" value="@endDate" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+<!-- News Articles Table -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Headline</th>
+            <th>Created Date</th>
+            <th>Category</th>
+            <th>Created By</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var article in Model)
+            {
+                <tr>
+                    <td>@article.NewsTitle</td>
+                    <td>@article.Headline</td>
+                    <td>@article.CreatedDate?.ToString("yyyy-MM-dd")</td>
+                    <td>@article.Category?.CategoryName</td>
+                    <td>@article.CreatedBy?.AccountName</td>
+                    <td>@(article.NewsStatus == true ? "Active" : "Inactive")</td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="6" class="text-center">No articles found for the selected date range.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Pagination -->
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="ReportStatistic"
+                   asp-route-skip="@((ViewBag.CurrentPage - 2) * ViewBag.PageSize)"
+                   asp-route-top="@ViewBag.PageSize"
+                   asp-route-startDate="@startDate"
+                   asp-route-endDate="@endDate">Previous</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                <a class="page-link" asp-action="ReportStatistic"
+                   asp-route-skip="@((i - 1) * ViewBag.PageSize)"
+                   asp-route-top="@ViewBag.PageSize"
+                   asp-route-startDate="@startDate"
+                   asp-route-endDate="@endDate">@i</a>
+            </li>
+        }
+
+        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="ReportStatistic"
+                   asp-route-skip="@(ViewBag.CurrentPage * ViewBag.PageSize)"
+                   asp-route-top="@ViewBag.PageSize"
+                   asp-route-startDate="@startDate"
+                   asp-route-endDate="@endDate">Next</a>
+            </li>
+        }
+    </ul>
+</nav>
+
+<!-- Pagination Styles -->
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+    }
+
+        .pagination .page-item {
+            margin: 0 5px;
+        }
+
+        .pagination .page-link {
+            color: #007bff;
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-decoration: none;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #f8f9fa;
+            border-color: #ddd;
+        }
+
+        .pagination .page-link:focus {
+            outline: none;
+        }
+</style>

@@ -1,0 +1,150 @@
+﻿@model IEnumerable<BusinessObject.NewsArticle>
+
+@{
+    ViewData["Title"] = "ListHistoryNews";
+}
+
+<h1>ListHistoryNews</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Headline)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tags)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsContent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NewsSource)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedById)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpdatedById)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifiedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewsTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Headline)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @foreach (var tag in item.Tags)
+                {
+                  <p style="font-size: 14px">@Html.DisplayFor(modelItem => tag.TagName)</p>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewsContent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewsSource)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedBy.AccountName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdatedById)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ModifiedDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new {  id=item.NewsArticleId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.NewsArticleId }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.NewsArticleId })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        @if (ViewBag.CurrentPage > 1)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index" asp-route-skip="@((ViewBag.CurrentPage - 2) * ViewBag.PageSize)" asp-route-top="@ViewBag.PageSize">Previous</a>
+            </li>
+        }
+
+        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+        {
+            <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                <a class="page-link" asp-action="Index" asp-route-skip="@((i - 1) * ViewBag.PageSize)" asp-route-top="@ViewBag.PageSize">@i</a>
+            </li>
+        }
+
+        @if (ViewBag.CurrentPage < ViewBag.TotalPages)
+        {
+            <li class="page-item">
+                <a class="page-link" asp-action="Index" asp-route-skip="@(ViewBag.CurrentPage * ViewBag.PageSize)" asp-route-top="@ViewBag.PageSize">Next</a>
+            </li>
+        }
+    </ul>
+</nav>
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+    }
+
+        .pagination .page-item {
+            margin: 0 5px;
+        }
+
+        .pagination .page-link {
+            color: #007bff;
+            border: 1px solid #ddd;
+            padding: 8px 12px;
+            text-decoration: none;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
+        }
+
+        .pagination .page-link:hover {
+            background-color: #f8f9fa;
+            border-color: #ddd;
+        }
+
+        .pagination .page-link:focus {
+            outline: none;
+        }
+</style>
