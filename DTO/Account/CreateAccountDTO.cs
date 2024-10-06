@@ -12,6 +12,7 @@ namespace DTO.Account
         [Required]
         public string? AccountName { get; set; }
         [Required]
+        [EmailAddress]
         public string? AccountEmail { get; set; }
         [Required]
         public int? AccountRole { get; set; }

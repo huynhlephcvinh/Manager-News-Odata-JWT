@@ -18,7 +18,7 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAutoMapper(typeof(AutoMapperProfile));
 // Add services to the container.
-builder.Services.AddScoped(typeof(FunewsManagementFall2024Context));
+//builder.Services.AddScoped(typeof(FunewsManagementFall2024Context));
 
 builder.Services.AddControllers().AddOData(
 o => o.Select().Filter().OrderBy().Expand().Count().SetMaxTop(null).AddRouteComponents("odata", ModelBuilder.GetEDMModel())
