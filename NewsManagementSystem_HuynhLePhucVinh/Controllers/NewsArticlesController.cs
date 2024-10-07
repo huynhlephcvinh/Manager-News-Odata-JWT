@@ -88,7 +88,7 @@ namespace NewsManagementSystem_HuynhLePhucVinh.Controllers
       //      var authenHeader = _httpContextAccessor.HttpContext.Request.Headers.Authorization.ToString();
             string? userId = HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = _systemAccountService.GetSystemAccount(short.Parse(userId));
-            _newsArticleService.CreateNews(news, user);
+            _newsArticleService.CreateNews(news, user, createNewsDTO.idTags);
             return Created(news);
         }
 

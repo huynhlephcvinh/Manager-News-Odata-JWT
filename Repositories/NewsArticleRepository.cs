@@ -11,7 +11,7 @@ namespace Repositories
     public interface INewsArticleRepository
     {
         public IEnumerable<NewsArticle> GetAllNewsArticle();
-        public void AddNews(NewsArticle newsArticle);
+        public void AddNews(NewsArticle newsArticle, List<int>? idTag);
         public void AddTagToNews(string? newsArticleId, Tag tag);
         public void UpdateNews(NewsArticle newsArticle);
         public int DeleteNews(string id);
@@ -22,7 +22,7 @@ namespace Repositories
     public class NewsArticleRepository : INewsArticleRepository
     {
         public IEnumerable<NewsArticle> GetAllNewsArticle() => NewsArticleManager.Instance.GetAllNewsArticle();
-        public void AddNews(NewsArticle newsArticle) => NewsArticleManager.Instance.AddNews(newsArticle);
+        public void AddNews(NewsArticle newsArticle, List<int>? idTag) => NewsArticleManager.Instance.AddNews(newsArticle, idTag);
 
         public void AddTagToNews(string? newsArticleId, Tag tag) => NewsArticleManager.Instance.AddTagToNews(newsArticleId, tag);
 

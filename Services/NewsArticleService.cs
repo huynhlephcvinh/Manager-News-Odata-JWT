@@ -13,7 +13,7 @@ namespace Services
     {
         IEnumerable<NewsArticle>? GetAllNews();
         NewsArticle? GetNewsById(string id);
-        void CreateNews(NewsArticle news, SystemAccount account);
+        void CreateNews(NewsArticle news, SystemAccount account, List<int>? idTag);
         void UpdateNews(NewsArticle news, SystemAccount account);
         int DeleteNews(string id);
         void AddTagToNews(string? newsArticleId, int idTag);
@@ -44,14 +44,14 @@ namespace Services
             return news;
         }
 
-        public void CreateNews(NewsArticle news, SystemAccount account)
+        public void CreateNews(NewsArticle news, SystemAccount account, List<int>? idTag)
         {
             news.CreatedById = account.AccountId;
             news.UpdatedById = account.AccountId;
             news.CreatedDate = DateTime.UtcNow;
             news.ModifiedDate = DateTime.UtcNow;
             news.NewsStatus = true;
-            _newsArticleRepository.AddNews(news);
+            _newsArticleRepository.AddNews(news, idTag);
         }
 
         public void UpdateNews(NewsArticle news, SystemAccount account)

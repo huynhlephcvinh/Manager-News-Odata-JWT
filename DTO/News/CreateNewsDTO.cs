@@ -20,5 +20,7 @@ namespace DTO.News
 
         public short? CategoryId { get; set; }
 
+        public List<int>? idTags { get; set; } = null;
+        public string? idTag { get; set; } = null;
     }
 }

@@ -1,0 +1,12 @@
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DTO\bin\Debug\net7.0\DTO.deps.json
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DTO\bin\Debug\net7.0\DTO.dll
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DTO\bin\Debug\net7.0\DTO.pdb
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DTO\obj\Debug\net7.0\DTO.GeneratedMSBuildEditorConfig.editorconfig
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DTO\obj\Debug\net7.0\DTO.AssemblyInfoInputs.cache
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DTO\obj\Debug\net7.0\DTO.AssemblyInfo.cs
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DTO\obj\Debug\net7.0\DTO.csproj.CoreCompileInputs.cache
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DTO\obj\Debug\net7.0\DTO.sourcelink.json
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DTO\obj\Debug\net7.0\DTO.dll
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DTO\obj\Debug\net7.0\refint\DTO.dll
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DTO\obj\Debug\net7.0\DTO.pdb
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DTO\obj\Debug\net7.0\ref\DTO.dll

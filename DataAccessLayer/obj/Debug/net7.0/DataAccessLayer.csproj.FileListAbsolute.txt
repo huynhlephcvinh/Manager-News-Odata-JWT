@@ -1,0 +1,16 @@
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\bin\Debug\net7.0\DataAccessLayer.deps.json
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\bin\Debug\net7.0\DataAccessLayer.dll
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\bin\Debug\net7.0\DataAccessLayer.pdb
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\bin\Debug\net7.0\BusinessObject.dll
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\bin\Debug\net7.0\BusinessObject.pdb
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\obj\Debug\net7.0\DataAccessLayer.csproj.AssemblyReference.cache
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\obj\Debug\net7.0\DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\obj\Debug\net7.0\DataAccessLayer.AssemblyInfoInputs.cache
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\obj\Debug\net7.0\DataAccessLayer.AssemblyInfo.cs
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\obj\Debug\net7.0\DataAccessLayer.csproj.CoreCompileInputs.cache
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\obj\Debug\net7.0\DataAccessLayer.sourcelink.json
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\obj\Debug\net7.0\DataAcce.E67BD773.Up2Date
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\obj\Debug\net7.0\DataAccessLayer.dll
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\obj\Debug\net7.0\refint\DataAccessLayer.dll
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\obj\Debug\net7.0\DataAccessLayer.pdb
+E:\PRN231\HuynhLePhucVinh_SE170460_Fall24BE\DataAccessLayer\obj\Debug\net7.0\ref\DataAccessLayer.dll

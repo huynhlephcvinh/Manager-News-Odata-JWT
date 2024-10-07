@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\NewsManagementSystem_HuynhLePhucVinh.props" />
+</Project>

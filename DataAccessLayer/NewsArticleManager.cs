@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -40,38 +41,57 @@ namespace DataAccessLayer
                     .Include(na => na.Tags)
                     .Include(ca=>ca.Category)
                     .Include(ac => ac.CreatedBy)
+                    .OrderByDescending(n => n.CreatedDate)
                     .ToList();
             }
             return list;
         }
 
-        public void AddNews(NewsArticle news)
+        public void AddNews(NewsArticle news, List<int>? idTag)
         {
             try
             {
                 using (var context = new FunewsManagementFall2024Context())
                 {
-                    var lastItem = context.NewsArticles.OrderByDescending(t => t.NewsArticleId).FirstOrDefault();
-                    if (lastItem != null)
+                    byte[] randomBytes = new byte[5]; // 5 bytes sẽ tạo ra 8 ký tự sau khi mã hóa Base64
+                    using (var rng = new RNGCryptoServiceProvider())
                     {
-                        int idLastItem = int.Parse(lastItem.NewsArticleId);
-                        idLastItem = idLastItem + 1;
-                        string idNewItem = idLastItem.ToString();
-                        news.NewsArticleId = idNewItem;
+                        rng.GetBytes(randomBytes);
                     }
-                    else
-                    {
-                        throw new Exception("Error no found last item");
-                    }
+
+                    // Mã hóa Base64 và chỉ lấy 7 ký tự đầu tiên
+                    string base64String = Convert.ToBase64String(randomBytes)
+                                                .Replace('+', '-') // Thay đổi ký tự để Base64 URL-safe
+                                                .Replace('/', '_') // Thay đổi ký tự để Base64 URL-safe
+                                                .Substring(0, 7);
+                    news.NewsArticleId = base64String.ToString();
+
+                    // Add the new NewsArticle
                     context.NewsArticles.Add(news);
-                    context.SaveChanges();
+                    context.SaveChanges(); // Save the NewsArticle first to generate the ID
+
+                    // Add tags if any were provided
+                    if (idTag != null && idTag.Count > 0)
+                    {
+                        // Load all tags for the given tag IDs
+                        var tagsToAdd = context.Tags.Where(t => idTag.Contains(t.TagId)).ToList();
+
+                        // Add each tag to the NewsArticle's Tags collection
+                        foreach (var tag in tagsToAdd)
+                        {
+                            news.Tags.Add(tag); // Assuming `Tags` is the navigation property
+                        }
+
+                        context.SaveChanges(); // Save changes to update the many-to-many relationship
+                    }
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                throw new Exception($"An error occurred while adding news: {ex.Message}");
             }
         }
+
 
         public void AddTagToNews(string? newsArticleId, Tag tag)
         {

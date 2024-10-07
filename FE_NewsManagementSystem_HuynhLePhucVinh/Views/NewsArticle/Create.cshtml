@@ -37,10 +37,28 @@
                 <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryAll"></select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
+
+            <!-- Tag Selection and Add Button -->
+            <div class="form-group">
+                <label>Select Tag</label>
+                <select id="TagSelect" class="form-control" asp-items="ViewBag.GetAllTag"></select>
+                <button type="button" id="AddTagButton" class="btn btn-secondary">Add Tag</button>
+            </div>
+
+            <!-- Added Tags List -->
+            <div class="form-group">
+                <label>Added Tags:</label>
+                <ul id="AddedTagsList"></ul>
+            </div>
+
+            <!-- Hidden field to store the list of selected tag IDs -->
+            <input type="hidden" asp-for="idTag" id="idTag" />
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
+
     </div>
 </div>
 
@@ -49,5 +67,63 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const addTagButton = document.getElementById('AddTagButton');
+            const tagSelect = document.getElementById('TagSelect');
+            const addedTagsList = document.getElementById('AddedTagsList');
+            const idTagField = document.getElementById('idTag');
+
+            let addedTags = [];
+
+            addTagButton.addEventListener('click', function () {
+                const selectedTagId = tagSelect.value;
+                const selectedTagName = tagSelect.options[tagSelect.selectedIndex].text;
+
+                if (selectedTagId && !addedTags.includes(selectedTagId)) {
+                    addedTags.push(selectedTagId);
+
+                    // Add tag to the list in the UI
+                    const li = document.createElement('li');
+                    li.textContent = `${selectedTagName} `;
+
+                    const removeButton = document.createElement('button');
+                    removeButton.textContent = 'x';
+                    removeButton.classList.add('remove-tag-btn');
+                    removeButton.addEventListener('click', function () {
+                        // Remove the tag from the array and UI
+                        addedTags = addedTags.filter(id => id !== selectedTagId);
+                        li.remove();
+                        idTagField.value = addedTags.join(',');
+                    });
+
+                    li.appendChild(removeButton);
+                    addedTagsList.appendChild(li);
+
+                    // Update the hidden field value
+                    idTagField.value = addedTags.join(',');
+                }
+            });
+        });
+    </script>
+
 }
+<style>
+    .remove-tag-btn {
+        background-color: transparent; /* No background */
+        border: none; /* Remove default border */
+        color: red; /* Red "x" color */
+        font-weight: bold; /* Make the "x" bold */
+        font-size: 1.2rem; /* Slightly larger size */
+        margin-left: 10px; /* Adds spacing from the tag name */
+        cursor: pointer; /* Show pointer cursor on hover */
+        outline: none; /* Remove the outline when focused */
+    }
+
+        .remove-tag-btn:hover {
+            color: darkred; /* Darker color when hovering */
+        }
+</style>

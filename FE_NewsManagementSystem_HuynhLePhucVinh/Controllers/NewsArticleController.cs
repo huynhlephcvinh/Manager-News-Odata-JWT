@@ -216,6 +216,15 @@ namespace FE_NewsManagementSystem_HuynhLePhucVinh.Controllers
             string categoryData = await Res.Content.ReadAsStringAsync();
             var categoryResponse = JsonConvert.DeserializeObject<CategoryResponse>
             (categoryData);
+            HttpResponseMessage tagRes = await _httpClient.GetAsync(TagAPIURL);
+            if (!tagRes.IsSuccessStatusCode)
+            {
+                throw new Exception("Unable to load tag.");
+            }
+            string tagData = await tagRes.Content.ReadAsStringAsync();
+            var tagResponse = JsonConvert.DeserializeObject<TagResponse>
+            (tagData);
+            ViewBag.GetAllTag = new SelectList(tagResponse.Value, "TagId", "TagName");
             ViewBag.CategoryAll = new SelectList(categoryResponse.Value, "CategoryId", "CategoryName");
             return View();
         }
@@ -228,29 +237,48 @@ namespace FE_NewsManagementSystem_HuynhLePhucVinh.Controllers
             {
                 return RedirectToAction("Login", "Auth");
             }
+
+            // Convert the comma-separated tag IDs into a List<int>
+            if (!string.IsNullOrEmpty(newsDTO.idTag))
+            {
+                newsDTO.idTags = newsDTO.idTag.Split(',')
+                                     .Where(tagId => int.TryParse(tagId, out _)) // Ensure valid integers
+                                     .Select(int.Parse)
+                                     .ToList();
+            }
+
             if (ModelState.IsValid)
             {
-
                 var json = JsonConvert.SerializeObject(newsDTO);
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 HttpResponseMessage res = await _httpClient.PostAsync(NewsArticleAPIURL, content);
-                //string responseContent = await res.Content.ReadAsStringAsync();
+
                 if (res.IsSuccessStatusCode)
                 {
                     return RedirectToAction(nameof(Index));
                 }
+
                 ModelState.AddModelError(string.Empty, "Server Error");
             }
 
+            // Reload Category and Tag data in case of an error
             HttpResponseMessage Res = await _httpClient.GetAsync(CategoryAPIURL);
             if (!Res.IsSuccessStatusCode)
             {
                 throw new Exception("Unable to load category.");
             }
             string categoryData = await Res.Content.ReadAsStringAsync();
-            var categoryResponse = JsonConvert.DeserializeObject<CategoryResponse>
-            (categoryData);
+            var categoryResponse = JsonConvert.DeserializeObject<CategoryResponse>(categoryData);
             ViewBag.CategoryAll = new SelectList(categoryResponse.Value, "CategoryId", "CategoryName");
+            HttpResponseMessage tagRes = await _httpClient.GetAsync(TagAPIURL);
+            if (!tagRes.IsSuccessStatusCode)
+            {
+                throw new Exception("Unable to load tag.");
+            }
+            string tagData = await tagRes.Content.ReadAsStringAsync();
+            var tagResponse = JsonConvert.DeserializeObject<TagResponse>
+            (tagData);
+            ViewBag.GetAllTag = new SelectList(tagResponse.Value, "TagId", "TagName");
             return View(newsDTO);
         }
 
